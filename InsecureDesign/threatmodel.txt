@@ -1,0 +1,71 @@
+Threat Model
+App Overview: Document Management System (DMS)
+
+A Document Management System (DMS) is an application that allows users to upload, store, view, and share documents (such as PDFs, Word files, images, etc.) within an organization.
+
+Key Features:
+User Authentication: Users need to sign in to access the system.
+File Upload: Users can upload documents.
+File Sharing: Users can share documents with others (internal/external).
+File Preview: Users can view the contents of documents without downloading them.
+Permissions: Each user has different access levels (e.g., admin, regular user, guest).
+Search Functionality: Users can search for documents using keywords or tags.
+Audit Logs: The system tracks who uploaded or accessed each document.
+
+
+Step 1: Define the Architecture (System Components)
+We’ll consider the following components in our threat model:
+
+Web Frontend (Client):
+The user interacts with this component to upload and view documents. It handles authentication, document display, and document search.
+
+Backend Server:
+Handles business logic, processes file uploads, and handles requests to share, preview, or download documents.
+
+Database:
+Stores the documents and metadata (e.g., who uploaded the document, who has access to it, document tags).
+
+Authentication Service:
+Responsible for user authentication (sign-in, password management, session tokens).
+
+File Storage (Cloud/File System):
+Stores the documents uploaded by users in the cloud or on a file system.
+
+
+Let's draw a diagram that shows the threat model
+
+# image.png
+
+The internet is the most untrusted zone because it accepts traffic from the public, Here is a stride analysis of the internet/untrusted zone
+
+1. Spoofing - Spoofing in simple words is when an attacker impersonates someone or something to gain unauthorized access. In this system, login credentials can be stolen or guessed by a threat actor.
+mitigations: MFA (multi-factor authentication)
+
+2. Tampering - Modifying data or a system component in an unauthorized manner. In threat modeling, tampering refers to an attack where an adversary modifies data or the functionality of a system in an unauthorized manner. This could involve:
+
+Modifying data in transit (e.g., intercepting and altering messages between systems).
+Changing data at rest (e.g., altering records in a database or configuration files).
+Manipulating system behavior (e.g., tampering with code, software, or processes to cause them to behave maliciously).
+
+The aim for the threat actor is to modify data and use the modified data to their advantage.
+
+mitigations: Mitigation strategies like data integrity checks, encryption, access control, and monitoring can reduce the risk and impact of tampering. 
+
+3. Repudiation: In the context of threat modeling and the STRIDE model, repudiation refers to the ability of an attacker or user to deny performing an action, which could make it difficult to trace their activity or hold them accountable. Repudiation threats focus on the absence of accountability — essentially, users can deny their actions, leading to security breaches or unauthorized activities being untraceable.
+
+Mitigations:  By implementing strong logging and auditing mechanisms, digital signatures, role-based access control, and non-repudiation features, the system can ensure that every action is traceable and that users cannot deny their interactions with sensitive documents.
+
+4. Information Disclosure: refers to the unintended or unauthorized exposure of sensitive data or information to unauthorized parties
+
+mitigations: To mitigate this risk, a combination of strong access control, encryption, file validation, and secure file sharing should be employed. Additionally, ensuring that document previews and search results are properly secured, and logging all user activity will help track and prevent unauthorized information leakage.
+
+5. Denial of service: Denial of Service (DoS) refers to a situation where legitimate users are unable to access a system, service, or resource due to malicious interference. In the context of threat modeling, it is crucial to understand how a system can be disrupted, either temporarily or permanently, by attackers who target the availability of the service or its components.
+mitigations: To ensure that your DMS remains accessible to legitimate users, it's crucial to implement rate limiting, load balancing, scalability, WAFs, bot detection, and other defensive measures. 
+
+6. Elevation of Priviledge: Elevation of Privilege (EoP) occurs when an attacker gains higher privileges or access levels than they are authorized to have, potentially allowing them to perform unauthorized actions. In threat modeling, EoP represents a critical vulnerability where a low-privileged user (e.g., regular user, guest) 
+can escalate their privileges to perform sensitive actions typically reserved for higher-privileged users (e.g., admins, system-level access).
+In the context of your Document Management System (DMS), EoP threats could allow attackers to bypass the system’s security controls and access or modify documents and data they should not have access to, or even change system configurations.
+
+Mitigations: Elevation of Privilege (EoP) is a serious threat to the Document Management System (DMS), potentially allowing unauthorized users to gain administrative access, alter document permissions, or manipulate sensitive data. To mitigate this risk, implement strong authentication, fine-grained access control, input validation, regular audits, and session protection. 
+By following these strategies, you can prevent attackers from gaining unauthorized access and ensure the integrity and confidentiality of your system.
+
